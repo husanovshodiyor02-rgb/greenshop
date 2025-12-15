@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Sale from "../assets/img/sale.png";
+import { useContext } from "react";
+import { ShopContext } from "../context/ShopContext";
 
 const Category = () => {
+  const { addToCart, addToWishlist } = useContext(ShopContext);
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -12,7 +15,6 @@ const Category = () => {
 
   return (
     <section className="container1 flex flex-col sm:flex-row gap-10">
-    
       <div className="w-[260px] p-5">
         <h2 className="text-lg font-bold text-[#3d3d3d] mb-4">Categories</h2>
 
@@ -53,9 +55,7 @@ const Category = () => {
         <img src={Sale} alt="sale" className="mt-8 w-full rounded-md" />
       </div>
 
-      
       <div className="flex-1">
-        
         <div className="flex flex-col md:flex-row justify-between mb-6">
           <div className="flex gap-8 text-[#3d3d3d] font-medium">
             <h3 className="border-b-2 border-[#46a358] pb-1 text-[#46a358] cursor-pointer">
@@ -75,11 +75,9 @@ const Category = () => {
           </div>
         </div>
 
-      
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {data.map((item) => (
             <div key={item.id} className="cursor-pointer group">
-             
               <div className="w-full h-[300px] flex items-center justify-center rounded-md relative overflow-hidden">
                 <img
                   src={item.img}
@@ -87,13 +85,18 @@ const Category = () => {
                   className="object-contain h-[250px] transition-all duration-300 group-hover:scale-105"
                 />
 
-             
                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-3 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                  <button className="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-[#46a358] hover:text-white transition">
+                  <button
+                    onClick={() => addToCart(item)}
+                    className="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-[#46a358] hover:text-white transition"
+                  >
                     <i className="ri-shopping-cart-2-line text-xl"></i>
                   </button>
 
-                  <button className="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-[#46a358] hover:text-white transition">
+                  <button
+                    onClick={() => addToWishlist(item)}
+                    className="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-[#46a358] hover:text-white transition"
+                  >
                     <i className="ri-heart-line text-xl"></i>
                   </button>
 
@@ -103,10 +106,8 @@ const Category = () => {
                 </div>
               </div>
 
-             
               <h3 className="text-[#3d3d3d] mt-4 font-medium">{item.title}</h3>
 
-              
               <p className="text-[#46a358] font-bold mt-1">
                 ${Number(item.price).toFixed(2)}
               </p>
