@@ -3,6 +3,7 @@ import { createContext, useEffect, useState } from "react";
 export const ShopContext = createContext();
 
 const ShopProvider = ({ children }) => {
+
   const [cartItems, setCartItems] = useState(() => {
     return JSON.parse(localStorage.getItem("cart")) || [];
   });
@@ -11,6 +12,7 @@ const ShopProvider = ({ children }) => {
     return JSON.parse(localStorage.getItem("wishlist")) || [];
   });
 
+ 
   const addToCart = (product) => {
     setCartItems((prev) => {
       if (prev.find((item) => item.id === product.id)) return prev;
@@ -25,7 +27,16 @@ const ShopProvider = ({ children }) => {
     });
   };
 
-  // 🔥 SAQLASH
+
+  const removeFromCart = (id) => {
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const removeFromWishlist = (id) => {
+    setWishlistItems((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
@@ -36,7 +47,14 @@ const ShopProvider = ({ children }) => {
 
   return (
     <ShopContext.Provider
-      value={{ cartItems, wishlistItems, addToCart, addToWishlist }}
+      value={{
+        cartItems,
+        wishlistItems,
+        addToCart,
+        addToWishlist,
+        removeFromCart,
+        removeFromWishlist,
+      }}
     >
       {children}
     </ShopContext.Provider>
