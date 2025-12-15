@@ -114,7 +114,7 @@ import Lo from "../assets/img/lo.png";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
 import { ShopContext } from "../context/ShopContext";
-
+import { Link } from "react-router-dom";
 const Header = () => {
   const [open, setOpen] = useState(false);
   const { cartItems, wishlistItems } = useContext(ShopContext);
@@ -146,23 +146,23 @@ const Header = () => {
           <div className="hidden md:flex items-center gap-5 cursor-pointer">
             <CiSearch className="text-2xl" />
 
-            <a href="/wishlist" className="relative">
+            <Link to="/wishlist" className="relative">
               <CiHeart className="text-2xl" />
               {wishlistItems.length > 0 && (
                 <span className="absolute -top-2 -right-2 bg-[#46a358] text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
                   {wishlistItems.length}
                 </span>
               )}
-            </a>
+            </Link>
 
-            <a href="/cart" className="relative">
+            <Link to="/cart" className="relative">
               <CiShoppingCart className="text-2xl" />
               {cartItems.length > 0 && (
                 <span className="absolute -top-2 -right-2 bg-[#46a358] text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
                   {cartItems.length}
                 </span>
               )}
-            </a>
+            </Link>
 
             <button className="w-[100px] h-[35px] rounded-md bg-[#46a358] flex items-center justify-center gap-1 font-medium text-base text-white cursor-pointer">
               <img src={Lo} alt="icon" />
